@@ -1,0 +1,304 @@
+<!DOCTYPE html><html>
+<!--
+© (c) Copyright 2020 ooda space ltd
+###############################################################################
+A. Redistribution and use:
+    1. Redistribution and use in source and binary forms, without modification, are permitted provided that the following conditions are met:
+            i.    Redistributions of source code must retain the above copyright notice and this text (Sections A., B., C., D.*, E.*, and F.*).
+            ii.   Redistributions in binary form must reproduce the above copyright notice and this text (Sections A., B., C., D.*, E.*, and F.*) in the documentation and/or other materials provided with the distribution.
+    2. Redistribution and use in source and binary forms, with modification, are permitted provided that the following conditions are met:
+            i.    Redistributions of source code must retain the above copyright notice and this text (Sections A., B., C., D.*, E.*, and F*. with Section C. modified as per A.2.iii).
+            ii.   Redistributions in binary form must reproduce the above copyright notice and this text (Sections A., B., C., D.*, E.*, and F.* with Section C. modified as per A.2.iii) in the documentation and/or other materials provided with the distribution.
+            iii.  The modifier has updated Section C. below as described in Section D.
+            iv.   The modifier has signalled value in the modified file on the ideas.oodaspace.eth smart contract as described in section E.
+            v.    The modified file is stored on the Arweave system as described in Section F.
+    3. If any part of this text (Sections A., B., C., D.*, E.*, and F.*) is held to be invalid it shall not invalidate the text as a whole or any other part of this text (Sections A., B., C., D., E., and F.).
+    * Sections D., E., and F. may be replaced by reference to an arweave transaction containing version 0 of the full license (with nothing else included). I.e. "For Sections D., E., and F. refer to the Arweave transaction am0Zxgnoxrip32hGUzCd3VTFoLMpZ9VbyfdvA_fIZ-I"
+###############################################################################
+B. Disclaimer:
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+###############################################################################
+C. The file
+    1. Media-type:                                              text/plain
+    2. Ethereum address of modifier:                            0x266D80d1a7f8926FE44BA310eA2bDa7d302a9615
+    3. Distance [integer dec]:                                  0
+    4. Context [256bit word hex]:                               0x0000000000000000000000000000000000000000000000000000000000000000
+    5. SHA3 256-bit hash of the file [only for redistributions in binary form, else "Not Applicable"]:  Not Applicable
+###############################################################################
+For Sections D., E., and F. refer to the Arweave transaction am0Zxgnoxrip32hGUzCd3VTFoLMpZ9VbyfdvA_fIZ-I
+###############################################################################
+
+-->
+<head>
+<style>
+    html {-ms-overflow-style: none;scrollbar-width: none;height: 100%;overflow-x:auto;overflow-y: hidden;}
+    html::-webkit-scrollbar {display: none;}
+    body {font-size: 40px;height: 100%;margin:0px;padding: 0px;}
+</style>
+
+<link rel="shortcut icon" href="http://localhost:3001/icon3.png" />
+
+</head><body>
+
+<!-- js utilities:
+<script type="text/javascript" src="lib/rusha.min.js"></script>
+<script type="text/javascript" src="lib/web3v191.min.js"></script>
+<script type="text/javascript" src="lib/biginteger.min.js"></script>
+<script type="text/javascript" src="lib/util_web3v2.js"></script>
+
+<script type="text/javascript" src="lib/jdenticon.min.js"></script>
+<script type="text/javascript" src="lib/purify.min.js"></script>
+<script type="text/javascript" src="lib/contractsetup6_web3v2.js"></script>-->
+
+<!-- oo templates
+<script type="text/javascript" src="lib/ooSpawner.js"></script>
+<script type="text/javascript" src="lib/ooIconCreator.js"></script>
+<script type="text/javascript" src="lib/ooWeb3WSManager.js"></script>
+<script type="text/javascript" src="lib/ooLogSorter.js"></script>
+<script type="text/javascript" src="lib/ooFilterCurator.js"></script>
+<script type="text/javascript" src="lib/ooContextCurator.js"></script>
+<script type="text/javascript" src="lib/ooFilter.js"></script>
+<script type="text/javascript" src="lib/ooContextManager.js"></script>
+<script type="text/javascript" src="lib/ooIdea.js"></script>
+<script type="text/javascript" src="lib/ooLogo.js"></script>
+<script type="text/javascript" src="lib/ooMetaLogo.js"></script>
+<script type="text/javascript" src="lib/ooInput.js"></script>
+<script type="text/javascript" src="lib/ooInputFilter.js"></script>
+<script type="text/javascript" src="lib/ooFilterInput.js"></script>
+<script type="text/javascript" src="lib/ooMetaFilterInput.js"></script>-->
+<!--<script type="text/javascript" src="lib/ooMetaInputFilterDirector.js"></script>-->
+<!--<script type="text/javascript" src="lib/ooPendingTxManager.js"></script>
+<script type="text/javascript" src="lib/ooContentGetter.js"></script>
+<script type="text/javascript" src="lib/ooFilterFiller.js"></script>
+<script type="text/javascript" src="lib/ooWebWorkerManager.js"></script>
+<script type="text/javascript" src="lib/ooUserComms.js"></script>
+<script type="text/javascript" src="lib/ooBaseTemplate.js"></script>-->
+
+<script id="init">
+
+const pause =  sec => new Promise(r => setTimeout(r, 1000 * sec))
+
+//const await loadScript = name => new Promise(r => import(name).then(r))
+const loadScript = name => new Promise(r => {let sc = document.createElement("script");sc.src=name;sc.type="text/javascript";sc.onload=r;document.getElementById("base").appendChild(sc);})
+
+
+
+// This function is used to establish the global message manager object msgMan to handle message passing between oos.
+let mm = function(){
+
+    // This creates a js proxy object on a passed array (for the message queues). It defines a newmsg function that returns a promise that resolves when a new message has been pushed to the queue. This allows each oo to asyncrhonously watch for new messages.
+    this.msgarray = function(msgQueueArray){
+      function res(){return}
+      let watchedMsgQueueArray = new Proxy(msgQueueArray, {set(arr, key, val) {arr[key] = val; res(); return true;}});
+      watchedMsgQueueArray.newmsg = function(){return new Promise(r => res = r)};
+      return watchedMsgQueueArray;
+    }
+
+    this.date = new Date();
+
+    // This is called by each oo as it first runs to register it in the msg manager. Or, it is called when the message manager first comes across a message from or to a new oo. It initialses the message queues; inbound and outbound queues for each oo, a holding queue to hold messages until the oo is instantiated in the dom. Also inDom and on Server, flags intended for future use so that the message manager can pass messages remotely.
+    this.register = async function(name,priority,onServer=false){
+      if (!this[name]){
+            this[name] = {msgFlag : false,
+                            msgq_from : this.msgarray([]),
+                            msgq_to : this.msgarray([]),
+                            holdingq : [],
+                            inDom : false,
+                            onServer : onServer,
+                            getHeldMsgs : function (){
+                                  //this function retrieves msgs held until receiver requests ( to avoid msg loss during initialisation)
+                                  if(this.holdingq.length>0){
+                                        for (let i = 0; i< this.holdingq.length;i++){
+                                            this.msgq_to.push(this.holdingq[i]);
+                                        }
+                                        this.holdingq = [];
+                                  }
+                            }
+                          };
+        }
+      this.msgListener(name,priority);
+      return new Promise((resolve) => {resolve(true)});
+    },
+
+    // This listens for new messages in the oubound message queues for all of the messages. It then routes it to the inbound message queues of the oos listed in the msg.params.to field.
+    this.msgListener = async function(name,priority){
+                let msg
+                while(true){
+                      await this[name].msgq_from.newmsg();
+                      while(this[name].msgq_from.length>0){
+                            let msg = this[name].msgq_from.pop();
+                            if (msg.method){ //as JSONrpc structure used need to distinguish between requests/notifications [with msg.method] and responses [with msg.result]
+                                  for (let n in msg.params.to){
+                                          if (!(this[msg.params.to[n]])){
+                                                // if any of the to oos aren't registered in the msg manager, register them.
+                                                await this.register(msg.params.to[n]);
+                                                if (!this[msg.params.to[n]].inDom){
+                                                      // If the oo's js code hasn't yet run, puts message in holding q to be accessed when inDom or onServer
+                                                      this[msg.params.to[n]].holdingq.push(msg)
+                                                }
+                                          }
+                                          else { // the message must exist. put it in the oo's inbound queue.
+                                                try {
+                                                    this[msg.params.to[n]].msgq_to.push(msg);
+                                                }
+                                                catch {
+                                                    Error(`Msg delivery failed: ${msg.method},${msg.params.to}`)
+                                                }
+                                          }
+                                    }
+                                }
+                                else if (msg.result){
+                                      if (!(this[msg.result.to])){
+                                          // if any of the to oos aren't registered in the msg manager, register them.
+                                          await this.register(msg.result.to);
+                                          if (!this[msg.result.to].inDom){
+                                                // If the oo's js code hasn't yet run, puts message in holding q to be accessed when inDom or onServer
+                                                this[msg.result.to].holdingq.push(msg) // puts message in holding q to be accessed when inDom or onServer
+                                          }
+                                      }
+                                      else { // the message must exist. put it in the oo's inbound queue.
+                                              try {
+                                                this[msg.result.to].msgq_to.push(msg);
+                                              }
+                                              catch {
+                                                Error(`Msg delivery failed: ${msg.id},${msg.result.to}`)
+                                              }
+                                      }
+                                  }
+                                  else { // must not be JSONrpc structured, ignore
+                                    console.warn(`Msg delivery failed: ${msg},${msg.params.to}`)
+                                  }
+                       } // end of message batch [while(this[name].msgq_from.length>0)]
+                  } // end of infinite loop [while(true)]
+      }// end of message listener definition
+
+}; // end of mm definition
+
+// create the global message manager object
+msgMan = new mm;
+
+
+/*Thesee vars and utility functions locate the oos used to create the site */
+
+let metatthisprospective
+let metathisooManagersprospective//'0x1111111111111111111111111111111111111111111111111111111111111' //XORcontextidea(metatthisprospective,hexifyString('oo'),1)
+let metaoodistance = 1
+let txtToOOId
+let txtToOOhk
+
+// this must run on first pass of the code in the browser, so IIFE:
+;(async function(){
+
+  await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve));
+
+
+
+  await loadScript("lib/rusha.min.js")
+  await loadScript("lib/web3v191.min.js")
+  await loadScript("lib/biginteger.min.js")
+  await loadScript("lib/util_web3v2.js")
+  await loadScript("lib/jdenticon.min.js")
+  await loadScript("lib/purify.min.js")
+  await loadScript("lib/contractsetup6_web3v2.js")
+
+  metatthisprospective = XORcontextidea('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',hexifyString('this'),0)
+  metathisooManagersprospective = metatthisprospective//'0x1111111111111111111111111111111111111111111111111111111111111' //XORcontextidea(metatthisprospective,hexifyString('oo'),1)
+
+  txtToOOId = function (txt){
+    return '_' + metathisooManagersprospective + '_' + XORcontextidea(metathisooManagersprospective,hexifyString(txt),metaoodistance)//2
+  }
+  txtToOOhk = function (txt){
+    return XORcontextidea(metathisooManagersprospective,hexifyString(txt),metaoodistance)
+  }
+
+  await loadScript("lib/ooSpawner.js")
+  await loadScript("lib/ooIconCreator.js")
+  await loadScript("lib/ooWeb3WSManager.js")
+  await loadScript("lib/ooLogSorter.js")
+  await loadScript("lib/ooFilterCurator.js")
+  await loadScript("lib/ooContextCurator.js")
+  await loadScript("lib/ooFilter.js")
+  await loadScript("lib/ooContextManager.js")
+  await loadScript("lib/ooIdea.js")
+  await loadScript("lib/ooLogo.js")
+  await loadScript("lib/ooMetaLogo.js")
+  await loadScript("lib/ooInput.js")
+  await loadScript("lib/ooFilterInput.js")
+  await loadScript("lib/ooMetaFilterInput.js")
+  await loadScript("lib/ooPendingTxManager.js")
+  await loadScript("lib/ooContentGetter.js")
+  await loadScript("lib/ooFilterFiller.js")
+  await loadScript("lib/ooWebWorkerManager.js")
+  await loadScript("lib/ooUserComms.js")
+  await loadScript("lib/ooBaseTemplate.js")
+
+
+  //procedure used to instantiate an oo in the document.
+  let createProc = async function(txt) {
+    let jel = document.createElement('script');
+     jel.innerHTML = txt;
+    document.getElementById('main').append(jel);
+  }
+
+  // make sure there is a dom to put oos in!
+
+
+  // start the various oos needed to construct and run the site. They are place in the meta layout layer
+
+  createProc(spawner_proc(metathisooManagersprospective,txtToOOhk('Spawner'),metaoodistance,txtToOOId('Spawner')));
+
+
+})();
+
+
+
+// setup Horizontal scrolling.
+window.addEventListener('wheel', (e) => {
+      if (e.target.id =="main" || e.target.id=="base"  || e.target.id=="meta" || e.target.id=="backgroundlabels" || e.target.id=="_0x838383ffffffffffffffffffffffffffffffffffffffffffffffffff8b97968c_0xdd81818ffffffffffffffffffffffffffffffffffffffffffffffffff3a3b2b7filterbackground" || e.target.id=="_0x838383ffffffffffffffffffffffffffffffffffffffffffffffffff8b97968c_0xdd81818ffffffffffffffffffffffffffffffffffffffffffffffffff3a3b2b7txbackground" || e.target.id=="_0x838383ffffffffffffffffffffffffffffffffffffffffffffffffff8b97968c_0xdd81818ffffffffffffffffffffffffffffffffffffffffffffffffff3a3b2b7oobackground"  || e.target === document.getElementsByTagName('html')[0]){
+            window.focus()
+            let wheelDelta = e.wheelDelta;
+            let deltaY = e.deltaY;
+            // handles chrome etc
+            if (wheelDelta) {
+                delta = -wheelDelta / 120;
+            }
+            // handles firefox etc
+            if(deltaY) {
+                deltaY > 0 ? delta = 1 : delta = -1;
+            }
+            window.scrollBy(delta*20,0)
+      }
+})
+
+//set the perspective origin based on the horizonal scroll position (includes reaction to prgrammatic scrolls)
+    document.addEventListener('scroll',async (e) => {
+          let middle = window.pageXOffset + (window.innerWidth * 0.5)//
+          document.getElementById('base').style.cssText += "perspective-origin: "+ String(middle) + "px 50px;"
+    })
+</script>
+
+<!-- used for debugging! <script type="text/javascript" src="dump.js"></script>-->
+
+<!-- main container div -->
+<div id="main" style="width:100%;height:100%;display:grid;grid-template: auto / auto;">
+      <!-- base container div contains all the oos seen in the main functionality of the site -->
+      <div id="base" style="width:100%;height:100vh;grid-area: 1 / 1 / 2 / 2;transition: all 0.5s;perspective-origin: 50% 50px;border-left: 15px solid white; margin-left:2px;border-top-left-radius: 40px;border-bottom-left-radius: 40px;perspective: 1000px;position:absolute;;left:0px;">
+      </div>
+
+      <div id="meta" style="display:none;width:100%;height:calc(100% - 330px);grid-area: 1 / 1 / 2 / 2;transition: all 0.5s;perspective-origin: 50% 50px;border-left: 15px solid white; margin-left:2px;border-top-left-radius: 40px;border-bottom-left-radius: 40px;perspective:1000px;position:relative;left:0px;">
+            <div style="font-size:12px;color:#555;position:relative;top:calc(100vh - 25px);text-align: end;"> </div>
+            <!-- meta container div contains all the oos taht contained the code that run the site. Also used to present the code that is used to serve the code from the server.-->
+            </div>
+
+            <div id="decoration" style="width:100%;height: 290px;grid-area: 1 / 1 / 2 / 2;transition: all 0.5s;perspective-origin: 50% 50px;border-left: 15px solid white; margin-left:2px;border-top-left-radius: 40px;border-bottom-left-radius: 40px;z-index: -50;perspective: 1000px;position: relative;left:-10px;top: calc(100% - 380px);">
+            </div>
+
+            <div id="backgroundlabels" style="position: fixed;width: calc(100vw - 4px);height: 100vh;display: none;grid-template: calc(100vh - 228px) 182px auto /auto;font-size: 20px;font-family: courier;text-align: end;padding-right: 4px;pointer-events:none;">
+                  <div style="color:#81acd6;padding-right: 4px;">IDEAS</div>
+                  <div style="color:#d0eaf1;padding-right: 4px;">FILTERS</div>
+                  <div style="color:#81acd6;padding-right: 4px;">VALUE SIGNALS<br><span style="font-size:10px;">&#169; ooda space ltd</span></div>
+            </div>
+      </div>
+</div>
+
+</body></html>
