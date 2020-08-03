@@ -12,3 +12,5 @@ Initiate ideas to get value signal payments from others.
 
 Signal value to get a share of profits.
 
+
+(c) ooda space ltd
